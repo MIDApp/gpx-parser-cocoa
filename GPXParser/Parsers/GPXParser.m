@@ -26,6 +26,11 @@
             self.fix.longitude = [[attributeDict objectForKey:@"lon"] doubleValue];
         }
 	}
+
+    // Track segment
+    if ([elementName isEqualToString:@"trkseg"]) {
+        if (!self.segment) self.segment = [Track new];
+    }
     
     // Waypoint
     if ([elementName isEqualToString:@"wpt"]) {
@@ -63,10 +68,21 @@
 		self.track = nil;
         return;
     }
+
+    // End track segment
+    if ([elementName isEqualToString:@"trkseg"] && self.segment) {
+        [self.track.trackSegments addObject:self.segment];
+        self.segment = nil;
+    }
     
     // End track point
     if([elementName isEqualToString:@"trkpt"] && self.fix && self.track) {
         [self.track.fixes addObject:self.fix];
+
+        if (self.segment) {
+            [self.segment.fixes addObject:self.fix];
+        }
+
 		self.fix = nil;
         return;
     }

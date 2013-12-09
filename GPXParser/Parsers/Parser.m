@@ -25,6 +25,7 @@
 @synthesize fix=_fix;
 @synthesize waypoint=_waypoint;
 @synthesize callback=_callback;
+@synthesize segment=_segment;
 
 #pragma mark Initialization
 

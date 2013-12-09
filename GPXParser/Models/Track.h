@@ -12,6 +12,7 @@
 @interface Track : NSObject
 @property (nonatomic, strong) NSMutableArray *fixes;
 @property (nonatomic, strong) MKPolyline *path;
+@property (nonatomic, strong) NSMutableArray *trackSegments;
 @property (nonatomic, strong) MKPolyline *shadowPath;
 
 @property (nonatomic, assign) MKCoordinateRegion region;

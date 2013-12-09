@@ -19,6 +19,7 @@
 @property (nonatomic, strong) GPX *gpx;
 @property (nonatomic, strong) NSMutableString *currentString;
 @property (nonatomic, strong) Track *track;
+@property (nonatomic, strong) Track *segment;
 @property (nonatomic, strong) Track *route;
 @property (nonatomic, strong) Waypoint *waypoint;
 @property (nonatomic, strong) Fix *fix;
