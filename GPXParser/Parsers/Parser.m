@@ -13,6 +13,14 @@
 @interface Parser () {
     Fix *_previousFix;
 }
+@property (nonatomic, strong) GPX *gpx;
+@property (nonatomic, strong) NSMutableString *currentString;
+@property (nonatomic, strong) Track *track;
+@property (nonatomic, strong) Track *route;
+@property (nonatomic, strong) Waypoint *waypoint;
+@property (nonatomic, strong) Fix *fix;
+@property NSError *error;
+
 - (void)parse:(NSData *)data completion:(void(^)(BOOL success, GPX *gpx))completionHandler;
 - (void)generatePaths;
 @end
@@ -24,18 +32,16 @@
 @synthesize route=_route;
 @synthesize fix=_fix;
 @synthesize waypoint=_waypoint;
-@synthesize callback=_callback;
 
 #pragma mark Initialization
 
-+ (void)parse:(NSData *)data completion:(void(^)(BOOL success, GPX *gpx))completionHandler {
-    [[self new] parse:data completion:completionHandler];
++ (GPX*)parse:(NSData *)data error:(NSError**)error{
+    return [[self new] parse:data error:error];
 }
 
 #pragma mark - Parsing
 
-- (void)parse:(NSData *)data completion:(void(^)(BOOL success, GPX *gpx))completionHandler {
-    self.callback = completionHandler;
+- (GPX*)parse:(NSData *)data error:(NSError**)error{
     
     NSXMLParser *_parser = [[NSXMLParser alloc] initWithData:data];
     [_parser setDelegate:self];
@@ -43,6 +49,9 @@
     [_parser setShouldReportNamespacePrefixes:NO];
     [_parser setShouldResolveExternalEntities:NO];
     [_parser parse];
+    
+    if (self.error) *error = self.error;
+    return self.gpx;
 }
 
 #pragma mark - XML Parser
@@ -54,15 +63,11 @@
 }
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
-    dispatch_async(dispatch_get_main_queue(), ^{ 
-        _callback(NO, nil);
-    });
+    self.error = parseError;
 }
 
 - (void)parser:(NSXMLParser *)parser validationErrorOccurred:(NSError *)validError {
-    dispatch_async(dispatch_get_main_queue(), ^{ 
-        _callback(NO, nil);
-    });
+    self.error = validError;
 }
 
 - (void)parserDidStartDocument:(NSXMLParser *)parser {
@@ -71,10 +76,6 @@
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
     [self generatePaths];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{ 
-        _callback(YES, _gpx);
-    });
 }
 
 #pragma mark - Conversion
@@ -116,7 +117,7 @@
                 double lat2Rad = _coordinate.latitude * RAD_PER_DEG;
                 double a = pow((sin(dlatRad / 2)), 2.0) + cos(lat1Rad) * cos(lat2Rad) * pow(sin(dlonRad / 2), 2.0);
                 double c = 2 * atan2(sqrt(a), sqrt(1 - a));
-                double distance = Rkm * c;                
+                double distance = Rkm * c;
                 if (isnan(distance)) distance = 0;
                 _gpx.distance += distance;
             } else {
@@ -127,7 +128,7 @@
         track.path = [MKPolyline polylineWithCoordinates:_coordinates count:track.fixes.count];
         track.shadowPath = [MKPolyline polylineWithCoordinates:_coordinates count:track.fixes.count];
         free(_coordinates);
-    } 
+    }
     
     // Take waypoints into account
     for (int i = 0; i < _gpx.waypoints.count; i++) {

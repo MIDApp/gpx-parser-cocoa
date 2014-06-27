@@ -8,6 +8,8 @@
 
 #import "TCXParser.h"
 
+#import "Parser_Private.h"
+
 @implementation TCXParser
 
 #pragma mark - XML Parser

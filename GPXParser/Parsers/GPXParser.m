@@ -7,6 +7,7 @@
 //
 
 #import "GPXParser.h"
+#import "Parser_Private.h"
 
 @implementation GPXParser
 
