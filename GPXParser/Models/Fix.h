@@ -12,6 +12,7 @@
 @interface Fix : NSObject
 @property (nonatomic, assign) double latitude;
 @property (nonatomic, assign) double longitude;
+@property (nonatomic, assign) double elevation;
 
 - (CLLocationCoordinate2D)coordinate;
 @end

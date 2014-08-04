@@ -28,6 +28,11 @@
         }
 	}
     
+    // Elevation
+    if ([elementName isEqualToString:@"ele"]) {
+        self.currentString = [NSMutableString string];
+    }
+
     // Waypoint
     if ([elementName isEqualToString:@"wpt"]) {
 		if (!self.waypoint) {
@@ -76,6 +81,13 @@
     if ([elementName isEqualToString:@"desc"] && self.waypoint) {
         self.waypoint.name = self.currentString;
         self.currentString = nil;
+    }
+    
+    // Elevation
+    if ([elementName isEqualToString:@"ele"]) {
+        float elevation = [self.currentString doubleValue];
+        self.fix.elevation = elevation;
+        self.waypoint.elevation = elevation;
     }
     
     // End waypoint
