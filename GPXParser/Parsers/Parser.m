@@ -50,7 +50,7 @@
     [_parser setShouldResolveExternalEntities:NO];
     [_parser parse];
     
-    if (self.error) *error = self.error;
+    if (self.error && error) *error = self.error;
     return self.gpx;
 }
 
