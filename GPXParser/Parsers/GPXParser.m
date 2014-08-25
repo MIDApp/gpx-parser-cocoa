@@ -43,7 +43,7 @@
 	}
     
     // Waypoint name
-    if ([elementName isEqualToString:@"desc"] &&  self.waypoint) {
+    if ([elementName isEqualToString:@"name"] &&  self.waypoint) {
         self.currentString = [NSMutableString string];
     }
     
@@ -78,7 +78,7 @@
     }
     
     // Waypoint name
-    if ([elementName isEqualToString:@"desc"] && self.waypoint) {
+    if (([elementName isEqualToString:@"name"]) && self.waypoint) {
         self.waypoint.name = self.currentString;
         self.currentString = nil;
     }
