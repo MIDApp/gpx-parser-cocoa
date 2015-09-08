@@ -13,12 +13,14 @@
 @synthesize fixes=_fixes;
 @synthesize path=_path;
 @synthesize shadowPath=_shadowPath;
+@synthesize trackSegments = _trackSegments;
 
 #pragma mark - Initialization
 
 - (id)init {
     if (self = [super init]) {
         self.fixes = [NSMutableArray array];
+        self.trackSegments = [NSMutableArray array];
     }
     return self;
 }
