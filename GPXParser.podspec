@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
   s.name         = "GPXParser"
   s.version      = "1.0"
-  s.summary      = "Parse GPX & TCX files for iOS applications."
-  s.homepage     = "https://github.com/fousa/gpx-parser-ios"
+  s.summary      = "Parse GPX & TCX files for iOS, macOS and tvOS  applications."
+  s.homepage     = "https://github.com/MIDApp/gpx-parser-ios"
   s.license = { :type => 'MIT', :text => <<-LICENSE
                 Copyright (c) 2012 Jelle Vandebeeck
                 
@@ -23,9 +23,13 @@ Pod::Spec.new do |s|
   }
   s.author       = { "Jelle Vandebeeck" => "jelle@fousa.be" }
   s.source       = { :git => "https://github.com/fousa/gpx-parser-ios.git", :tag => "1.0" }
-  s.platform     = :ios, '4.0'
+
+  s.ios.deployment_target = '4.0'
+  s.osx.deployment_target = '10.8'
+  s.tvos.deployment_target = '9.0'
 
   s.source_files = 'GPXParser/**/*.{h,m}'
   s.frameworks  = 'MapKit', 'CoreLocation'
   s.requires_arc = true
+
 end

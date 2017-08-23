@@ -1,6 +1,6 @@
 # GPX Parser
 
-Parser GPX & TCX files for iOS application
+Parser GPX & TCX files for iOS, macOS and tvOS application
 
 ## How to use
 
