@@ -193,7 +193,8 @@
     }
     
     // Create the region
-    MKCoordinateRegion _region;
+    MKCoordinateRegion _region = (MKCoordinateRegion) { kCLLocationCoordinate2DInvalid, MKCoordinateSpanMake(0, 0) };
+    
     _region.center.latitude = _topLeftCoord.latitude - (_topLeftCoord.latitude - _bottomRightCoord.latitude) * 0.5;
     _region.center.longitude = _topLeftCoord.longitude + (_bottomRightCoord.longitude - _topLeftCoord.longitude) * 0.5;
     _region.span.latitudeDelta = fabs(_topLeftCoord.latitude - _bottomRightCoord.latitude);
