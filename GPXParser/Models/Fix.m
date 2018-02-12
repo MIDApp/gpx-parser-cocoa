@@ -8,10 +8,21 @@
 
 #import "Fix.h"
 
+double const UnsetFixElevation = -DBL_MAX;
+
 @implementation Fix
 @synthesize latitude=_latitude;
 @synthesize longitude=_longitude;
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        _elevation = UnsetFixElevation;
+    }
+    return self;
+}
 #pragma mark - Coordinate
 
 - (CLLocationCoordinate2D)coordinate {
