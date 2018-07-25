@@ -29,7 +29,7 @@
 #pragma mark - String
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<GPX (tracks %i routes %i waypoints %i)>", _tracks.count, _routes.count, _waypoints.count];
+    return [NSString stringWithFormat:@"<GPX (tracks %lu routes %lu waypoints %lu)>", (unsigned long)_tracks.count, (unsigned long)_routes.count, (unsigned long)_waypoints.count];
 }
 
 @end
